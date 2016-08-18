@@ -1,0 +1,16 @@
+6
+2
+AE
+5
+FEM
+5
+RAC
+5
+DMM2
+5
+HT
+5
+ELECTIVE
+5
+HT
+ACSL

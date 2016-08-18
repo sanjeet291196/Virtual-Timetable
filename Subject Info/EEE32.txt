@@ -1,0 +1,16 @@
+6
+2
+EEI
+5
+SD
+5
+CMPS
+5
+MID
+5
+ES
+5
+ELECTIVE
+5
+ACSL
+PES
