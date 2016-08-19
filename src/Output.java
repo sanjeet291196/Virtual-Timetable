@@ -44,7 +44,9 @@ class Output {
         String Columns1[] = {"1", "2", "3", "4", "5", "6", "7"};
         OP = new JPanel(new BorderLayout());
         dayTable = new JTable(days, days[0]);
+        dayTable.setFont(new Font(null, 1, 14));
         hourTable = new JTable(Columns, Columns[0]);
+        hourTable.setFont(new Font(null, 1, 14));
         OutputTimeTable = new JTable(timetable, Columns1);
 
         OPGrid = new JPanel(new GridBagLayout());
@@ -84,8 +86,12 @@ class Output {
         OPIndex.add(new JLabel("Subject"));
         OPIndex.add(new JLabel("Faculty"));
         for (int i = 0; i < SubjectCount; i++) {
-            OPIndex.add(new JLabel(SubjectPage.Subs[i].getText()));
-            OPIndex.add(new JLabel(SubjectPage.faculty[i].FacultyName.getText()));
+            JLabel sub = new JLabel(SubjectPage.Subs[i].getText());
+            sub.setFont(new Font(null, 0, 12));
+            OPIndex.add(sub);
+            JLabel fac = new JLabel(SubjectPage.faculty[i].FacultyName.getText());
+            fac.setFont(new Font(null, 0, 12));
+            OPIndex.add(fac);
         }
 
         OP.add(OPGrid, BorderLayout.NORTH);

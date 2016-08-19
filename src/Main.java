@@ -70,9 +70,20 @@ public class Main extends Frame {
          * <code>Title</code> contains heading
          */
         JLabel Title = new JLabel("Time Table");
-        Title.setFont(new java.awt.Font("Ubuntu Mono", 1, 24));
+        Title.setFont(new java.awt.Font("Ubuntu Mono", 1, 30));
+        Title.setBackground(this.getBackground());
         Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         add(Title, BorderLayout.NORTH);     //add title to output
+        
+        
+        /**
+         * <code>Footer</code> contains footer at bottom of frame
+         */
+        JLabel Footer = new JLabel("Made by: Sanjit Singh Chouhan(14-582)(CSE)");
+        Footer.setBackground(this.getBackground());
+        Footer.setFont(new java.awt.Font("Ubuntu Mono", 2, 18));
+        Footer.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        add(Footer, BorderLayout.SOUTH);     //add footer to output
 
         /*
          Layout for displaying output
