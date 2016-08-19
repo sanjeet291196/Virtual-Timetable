@@ -96,9 +96,10 @@ public class Main extends Frame {
         /*
          Add Pan Panel to output and display HomePage
          */
-        Pan.setBorder(new EmptyBorder(10, 10, 10, 10));
+        Pan.setBorder(new EmptyBorder(2, 2, 2, 2));
         add(Pan);
         Card.show(Pan, "HomePage");
+
 
         /*
          Set Window Properties and display output
@@ -106,6 +107,7 @@ public class Main extends Frame {
         pack();
         setVisible(true);
         setResizable(false);
+        System.out.println(this.getWidth() + ":" + this.getHeight());
     }
 
 }//main class

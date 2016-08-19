@@ -2,6 +2,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.*;
 
 //class for design of faculty schedule page
@@ -31,6 +32,8 @@ class SchedulePage {
      * Schedule Selection check boxes
      */
     static JCheckBox[][] ScheduleCheckBox;
+    private static boolean day_btn_event = false;
+    private static boolean hr_btn_event = false;
 
     //intializes variables
     static void init() {
@@ -46,6 +49,11 @@ class SchedulePage {
         Hours = new JCheckBox[7];
         for (int i = 0; i < 7; i++) {
             Hours[i] = new JCheckBox("" + i);
+            Hours[i].addItemListener((ItemEvent e) -> {
+                if (!day_btn_event) {
+                    SetScheduleHourChange(e);
+                }
+            });
         }
 
         Days = new JCheckBox[]{
@@ -59,7 +67,9 @@ class SchedulePage {
 
         for (int i = 0; i < 6; i++) {
             Days[i].addItemListener((ItemEvent e) -> {
-                SetScheduleDayChange(e);
+                if (!hr_btn_event) {
+                    SetScheduleDayChange(e);
+                }
             });
         }
 
@@ -90,7 +100,7 @@ class SchedulePage {
     static void initSchedulePage() {
         char[] lunch = {'L', 'U', 'N', 'C', 'H', ' '};
         JPanel ScheduleCheckList = new JPanel();
-        ScheduleCheckList.setLayout(new GridLayout(8, 10));
+        ScheduleCheckList.setLayout(new GridLayout(8, 10, 1, 5));
 
         ScheduleCheckList.add(new JLabel("Days"));
         for (int i = 0; i < 4; i++) {
@@ -116,33 +126,31 @@ class SchedulePage {
         ScheduleCheckList.add(ConfirmButton);
         ScheduleCheckList.add(CancelButton);
 
-        Main.Pan.add(ScheduleCheckList, "SchedulePage");
+        JPanel schedule_panel = new JPanel();
+        schedule_panel.add(ScheduleCheckList);
+
+        Main.Pan.add(schedule_panel, "SchedulePage");
     }
 
     //sets affinity hours
     static void SetAffinityHours(Functions fn) {
         if (Variables.Affinity) {
-            SchedulePage.ScheduleCheckBox[2][5].setText("Afinity");
-            SchedulePage.ScheduleCheckBox[2][6].setText("Afinity");
+            SchedulePage.ScheduleCheckBox[5][4].setText("Afinity");
             SchedulePage.ScheduleCheckBox[5][5].setText("Afinity");
             SchedulePage.ScheduleCheckBox[5][6].setText("Afinity");
-            SchedulePage.ScheduleCheckBox[2][5].setEnabled(false);
-            SchedulePage.ScheduleCheckBox[2][6].setEnabled(false);
+            SchedulePage.ScheduleCheckBox[5][4].setEnabled(false);
             SchedulePage.ScheduleCheckBox[5][5].setEnabled(false);
             SchedulePage.ScheduleCheckBox[5][6].setEnabled(false);
             for (int i = 0; i < fn.SubjectCount; i++) {
-                for (int j = 5; j < 7; j++) {
-                    fn.BusyScheduleInfo[i][2][j] = true;
+                for (int j = 4; j < 7; j++) {
                     fn.BusyScheduleInfo[i][5][j] = true;
                 }
             }
         } else {
-            SchedulePage.ScheduleCheckBox[2][5].setText("");
-            SchedulePage.ScheduleCheckBox[2][6].setText("");
+            SchedulePage.ScheduleCheckBox[5][4].setText("");
             SchedulePage.ScheduleCheckBox[5][5].setText("");
             SchedulePage.ScheduleCheckBox[5][6].setText("");
-            SchedulePage.ScheduleCheckBox[2][5].setEnabled(true);
-            SchedulePage.ScheduleCheckBox[2][6].setEnabled(true);
+            SchedulePage.ScheduleCheckBox[5][4].setEnabled(true);
             SchedulePage.ScheduleCheckBox[5][5].setEnabled(true);
             SchedulePage.ScheduleCheckBox[5][6].setEnabled(true);
         }
@@ -152,12 +160,14 @@ class SchedulePage {
         for (int i = 0; i < 6; i++) {
             if (Days[i] == e.getSource()) {
                 for (int j = 0; j < 7; j++) {
+                    day_btn_event = true;
                     ScheduleCheckBox[i][j].setSelected(Days[i].isSelected());
                     SetScheduleChange(new ItemEvent(ScheduleCheckBox[i][j], i, ScheduleCheckBox[i][j], j));
                 }
                 break;
             }
         }
+        day_btn_event = false;
     }
 
     private static void SetScheduleChange(ItemEvent e) {
@@ -165,25 +175,52 @@ class SchedulePage {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 if (e.getSource() == ScheduleCheckBox[i][j]) {
-                    flag = true;
-                    for (int k = 0; k < 7; k++) {
-                        if (ScheduleCheckBox[i][k].isSelected() == false) {
-                            flag = false;
-                            break;
+                    if (!day_btn_event) {
+                        flag = true;
+                        for (int k = 0; k < 7; k++) {
+                            if (ScheduleCheckBox[i][k].isSelected() == false) {
+                                flag = false;
+                                break;
+                            }
                         }
+                        Days[i].setSelected(flag);
                     }
-                    Days[i].setSelected(flag);
-                    flag = true;
-                    for (int k = 0; k < 6; k++) {
-                        if (ScheduleCheckBox[k][j].isSelected() == false) {
-                            flag = false;
-                            break;
+                    if (!hr_btn_event) {
+                        flag = true;
+                        for (int k = 0; k < 6; k++) {
+                            if (ScheduleCheckBox[k][j].isSelected() == false) {
+                                flag = false;
+                                break;
+                            }
                         }
+                        Hours[j].setSelected(flag);
+                        break;
                     }
-                    Hours[j].setSelected(flag);
-                    break;
                 }
             }
         }
+        if (Variables.Affinity) {            
+            SchedulePage.ScheduleCheckBox[5][4].setSelected(true);
+            SchedulePage.ScheduleCheckBox[5][5].setSelected(true);
+            SchedulePage.ScheduleCheckBox[5][6].setSelected(true);
+        } else {
+            SchedulePage.ScheduleCheckBox[5][4].setSelected(false);
+            SchedulePage.ScheduleCheckBox[5][5].setSelected(false);
+            SchedulePage.ScheduleCheckBox[5][6].setSelected(false);
+        }
+    }
+
+    private static void SetScheduleHourChange(ItemEvent e) {
+        for (int i = 0; i < 7; i++) {
+            if (Hours[i] == e.getSource()) {
+                for (int j = 0; j < 6; j++) {
+                    hr_btn_event = true;
+                    ScheduleCheckBox[j][i].setSelected(Hours[i].isSelected());
+                    SetScheduleChange(new ItemEvent(ScheduleCheckBox[j][i], j, ScheduleCheckBox[j][i], i));
+                }
+                break;
+            }
+        }
+        hr_btn_event = false;
     }
 }//SchedulePage

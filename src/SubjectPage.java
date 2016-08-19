@@ -29,6 +29,7 @@ class SubjectPage {
     static JLabel[] Subs;
     static JButton BackButton, NextButton;
     static JPanel SubInfo = new JPanel();
+    static JPanel sub_panel = new JPanel();
 
     //initializes variables
     static void init(int SubjectCount, String[] Subjects) {
@@ -142,8 +143,10 @@ class SubjectPage {
         } else {
             SubInfo.add(NextButton);
         }
+        
+        sub_panel.add(SubInfo);
 
-        Main.Pan.add(SubInfo, "SubInfo");
+        Main.Pan.add(sub_panel, "SubInfo");
     }
 
     //destroys the page

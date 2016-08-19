@@ -110,7 +110,7 @@ class LabSchedulePage {
 
     //designs lab page
     static void initLabSchedulePage(int LabCount, Main frame) {
-        LabSchedule.setLayout(new GridLayout(9, 3));
+        LabSchedule.setLayout(new GridLayout(9, 3,30,10));
         LabSchedule.add(new JLabel(""));
         LabSchedule.add(new JLabel("Day"));
         LabSchedule.add(new JLabel("Hour"));

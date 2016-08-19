@@ -179,10 +179,9 @@ public class Functions {
 
     private void assignAffinity() {
         if (Variables.Affinity) {
-            OP.timetable[2][5] = "<- AF";
-            OP.timetable[2][6] = "AF ->";
-            OP.timetable[5][5] = "<- AF";
-            OP.timetable[5][6] = "AF ->";
+            OP.timetable[5][4] = "<--";
+            OP.timetable[5][5] = "AF";
+            OP.timetable[5][6] = "-->";
         }
     }
 
@@ -278,8 +277,7 @@ public class Functions {
             }
         }
         if (Variables.Affinity) {
-            for (int j = 5; j < 7; j++) {
-                SchedulePage.ScheduleCheckBox[2][j].setSelected(true);
+            for (int j = 4; j < 7; j++) {
                 SchedulePage.ScheduleCheckBox[5][j].setSelected(true);
             }
         }
