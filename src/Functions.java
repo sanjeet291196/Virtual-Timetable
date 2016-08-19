@@ -27,7 +27,7 @@ public class Functions {
         /*
              * Read file "Database.txt" for database driver and path
          */
-        Variables.file = new FileReader("Database.txt");
+        Variables.file = new FileReader("https://sanjeet291196.github.io/vt/Database.txt");
         Variables.Reader = new BufferedReader(Variables.file);
         Variables.ClassName = Variables.Reader.readLine();
         Variables.DBurl = Variables.Reader.readLine();
